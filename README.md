@@ -5,10 +5,10 @@ A tool to label object position in Carla world coordinate.
 
 ---
 
-- example_lbc_collect_data
+- example_lbc_collect_data : 
 Using "Learning by cheating" camera setting to collect the topdown view image.
 
-- Label_crosswalk_tool
+- Label_crosswalk_tool :
 Using PyQt to find the object Position in carla coordinate. 
 
 ### Usage 
