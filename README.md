@@ -1,7 +1,18 @@
 # topview_label_tool
 A tool to label object position in Carla world coordinate.
 
-## Setup
+
+## install 
+```bash
+conda create -n label python=3.7
+conda activate label
+
+# install package
+conda  install pyqt
+pip install opencv-python-headless
+
+pip install scipy
+```
 
 ---
 
