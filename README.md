@@ -2,6 +2,14 @@
 A tool to label object position in Carla world coordinate.
 
 
+- example_lbc_collect_data : 
+Using "Learning by cheating" camera setting to collect the topdown view image.
+
+- Label_crosswalk_tool :
+Using PyQt to find the object Position in carla coordinate. 
+---
+
+
 ## Install the environment
 
 ```bash
@@ -15,16 +23,8 @@ pip install opencv-python-headless
 pip install scipy
 ```
 
----
-
-- example_lbc_collect_data : 
-Using "Learning by cheating" camera setting to collect the topdown view image.
-
-- Label_crosswalk_tool :
-Using PyQt to find the object Position in carla coordinate. 
 
 ## Usage ( How to run the label_tool_program )
-
 ```
 cd Label_crosswalk_tool 
 
