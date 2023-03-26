@@ -14,6 +14,7 @@ class MainWindow_controller(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.result_flag = False
 
         self.dir_path = './map_collection/'
         self.main_image_path = './map_collection'
@@ -21,6 +22,8 @@ class MainWindow_controller(QMainWindow):
         self.points = [] # save points by right clicked 
         self.set_map_combobox()
         self.point_counter = 0
+        
+        
         
         # setup mouse press event on the image 
         self.ui.main_image.mousePressEvent = self.mouse_press_event
@@ -107,24 +110,15 @@ class MainWindow_controller(QMainWindow):
         
         
     def show_results(self):
-                
-        file_name = f"./label_result/{self.ui.map_comboBox.currentText()}_crosswalk.npy"
         
-    # if file not exist, do nothing
-        if  os.path.exists(file_name):
-            # file exists, read it and append data 
-            points_list = list( np.load(file_name) ) 
-            
-            for points in points_list:     
-                coor_list = []
-                for point in points:
-                    coor_list.append(self.carla_to_pixel(point))
-                
-                contours = np.array(coor_list)
-
-                cv2.fillPoly(self.current_top_img, pts = [contours], color =(0,0,255))
-                
-            self.set_image(self.current_top_img, self.ui.main_image)
+        if self.result_flag : 
+            self.result_flag  = False 
+        else:
+            self.result_flag  = True
+        ##############################
+        
+        
+        self.update_main_image()
 
     def save_np(self):
         
@@ -192,7 +186,7 @@ class MainWindow_controller(QMainWindow):
                 self.ui.index_comboBox.currentIndex()+1)
 
     def set_map_combobox(self):
-        map_list = ["Town03_opt", "Town04_opt", "Town05_opt", "Town06_opt", "Town07_opt",  "Town10HD_opt"]
+        map_list = ["Town01", "Town02", "Town03_opt", "Town04_opt", "Town05_opt", "Town06_opt", "Town07_opt",  "Town10HD_opt"]
 
         self.init_map_combobox = True
         self.ui.map_comboBox.clear()
@@ -225,6 +219,29 @@ class MainWindow_controller(QMainWindow):
             
             self.set_image(self.original_top_img, self.ui.main_image)
             self.update_ego_data()
+            
+            
+            if self.result_flag :
+                file_name = f"./label_result/{self.ui.map_comboBox.currentText()}_crosswalk.npy"
+                
+                # if file not exist, do nothing
+                if  os.path.exists(file_name):
+                    # file exists, read it and append data 
+                    points_list = list( np.load(file_name) ) 
+                    
+                    for points in points_list:     
+                        coor_list = []
+                        for point in points:
+                            coor_list.append(self.carla_to_pixel(point))
+                        
+                        contours = np.array(coor_list)
+
+                        cv2.fillPoly(self.current_top_img, pts = [contours], color =(0,0,255))
+                        
+                    self.set_image(self.current_top_img, self.ui.main_image)
+            
+            
+            
         
     def set_image(self, image, ui_main_image):
         
