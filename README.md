@@ -2,7 +2,7 @@
 A tool to label object position in Carla world coordinate.
 
 
-## install 
+## Install the environment
 
 ```bash
 conda create -n label python=3.7
